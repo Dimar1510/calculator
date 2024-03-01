@@ -30,7 +30,7 @@ btnMinus.onclick = () => operation('minus');
 btnDiv.onclick = () => operation('div');
 btnMulti.onclick = () => operation('multi');
 btnMod.onclick = () => operation('mod');
-btnDot.onclick = () => addDot(".");
+btnDot.onclick = () => addDot();
 btnClear.onclick = () => clearScreen();
 btnDel.onclick = () => del();
 btnEqual.onclick = () => eval();
