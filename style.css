@@ -4,7 +4,6 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
- 
 }
 
 body {
@@ -17,6 +16,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    padding: 5px;
 }
 
 #frame {
@@ -24,13 +24,13 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    background-color: grey;
-    width: 400px;
-    min-width: 400px;
+    background-color: rgb(45, 61, 79);
+    min-width: 250px;
+    max-width: 400px;
     border: 2px solid black;
     border-radius: 10px;
     padding: 20px;
-    flex: 0 1;
+    flex: 1;
 }
 
 #screen {
@@ -41,60 +41,83 @@ body {
     width: 100%;
     background-color: rgb(58, 98, 99);
     padding: 10px;
+    margin-bottom: 5px;
     border-radius: 10px;
     border: 2px solid black;
-
+    flex: 1;
 }
 
 #screenResult {
-    font-size: 36px;
     color: white;
     align-self: flex-end;
-    
+    font-size: 36px;
+}
+
+#mainBtns {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    width: 100%;
+    flex: 1;
 }
 
 button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50px;
     font-size: 24px;
-    border: 2px solid black;
+    border: 1px solid black;
     border-radius: 10px;
     cursor: pointer;
-    background-color: white;
-  
+    min-width: 30px;
+    height: 60px;
+    flex: 1;
+    background-color: #9bb2c8;
+}
+
+.utilBtns {
+    background-color: rgb(164, 164, 164);
+}
+
+.utilBtns:hover {
+    background-color: rgb(123, 123, 123);
+}
+
+.utilBtns:active {
+    background-color: rgb(79, 79, 79);
+}
+
+#Equal {
+   grid-column-start: 3;
+   grid-column-end: 5;
+}
+
+#btnEqual {
+    width: 100%;
+    background-color: rgb(136, 162, 136); 
+}
+
+#btnEqual:hover {
+    background-color: rgb(109, 143, 109);  
+}
+
+#btnEqual:active {
+    background-color: rgb(74, 109, 74);
 }
 
 button:hover {
     background-color: #8aa0b6;
+    transition: 0.25s;
+    
 }
 
 button:active {
     background-color: lightslategrey;
-}
-#mainBtns {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    width: 100%;
-}
-
-#mainBtns > button {
-    flex: 1;
-    height: 80px;
-    min-width: 70px;
-    width: 80px;
     
 }
 
-#bigBtns {
-    display: flex;
-    gap: 10px;
-    width: 100%;
-}
-
-#bigBtns > button {
-    height: 50px;
-    flex: 1;
+@media (max-width: 400px) {
+    #screenResult {
+        font-size: 20px;
+    }
+    button {
+        font-size: 20px;
+    }
 }

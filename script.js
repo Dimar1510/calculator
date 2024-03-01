@@ -7,7 +7,7 @@ const btnEqual = document.querySelector('#btnEqual');
 const btnDel = document.querySelector('#btnDel');
 const screen = document.querySelector('#screenResult');
 const btnClear = document.querySelector('#btnClear');
-
+const btnMod = document.querySelector('#btnMod')
 
 const screenLength = 14;
 
@@ -22,20 +22,35 @@ let evaluation = false;
 
 // a quick way to assign all the number buttons
 for (let i = 0; i <= 9; i++) {
-    document.querySelector(`#btn${i}`).addEventListener('click', () => populateDisplay(i))
+    document.querySelector(`#btn${i}`).addEventListener('click', () => populateDisplay(i));
 }
 
 btnPlus.onclick = () => operation('plus');
 btnMinus.onclick = () => operation('minus');
 btnDiv.onclick = () => operation('div');
 btnMulti.onclick = () => operation('multi');
-
+btnMod.onclick = () => operation('mod');
 btnDot.onclick = () => addDot(".");
 btnClear.onclick = () => clearScreen();
 btnDel.onclick = () => del();
 btnEqual.onclick = () => eval();
 
-
+// assign keyboard keys
+window.addEventListener('keydown', (event) => {
+    if (Number.isInteger(parseInt(event.key)))
+    populateDisplay(event.key)
+    else {
+        if (event.key == ".") addDot();
+        if (event.key == "Backspace") del();
+        if (event.key == "%") operation('mod');
+        if (event.key == "/") operation('div');
+        if (event.key == "*") operation('multi');
+        if (event.key == "+") operation('plus');
+        if (event.key == "-") operation('minus');
+        if (event.key == "=" || event.key == "Enter") eval();
+        if (event.key == "Escape") clearScreen();
+    }
+})
 
 
 // functions
@@ -60,7 +75,6 @@ function operation(operator) {
     }
     firstNum = Number(displayValue);
     operatorPressed = operator;
-    console.log ("first :", firstNum)
 }
 
 function addDot() {
@@ -80,30 +94,15 @@ function addDot() {
 function eval() {
     if (firstNum != 0){
     secondNum = Number(displayValue);
-    console.log ("second :", secondNum)
-    switch (evaluation) {
-        case 'plus':
-            result = firstNum + secondNum;
-        break;
-
-        case 'minus':
-            result = firstNum - secondNum;
-        break;
-
-        case 'div':
-            result = firstNum / secondNum;
-        break;
-
-        case 'multi':
-            result = firstNum * secondNum;
-        break;
     
-        default:
-            break;
-    }
+    if (evaluation == 'plus') result = firstNum + secondNum;
+    if (evaluation == 'minus') result = firstNum - secondNum;
+    if (evaluation == 'div') result = firstNum / secondNum;
+    if (evaluation == 'multi') result = firstNum * secondNum;
+    if (evaluation == 'mod') result = firstNum % secondNum;    
     
-    console.log('result: ', result)
-    displayValue =  `${result.toFixed(12)}`;
+    // write the result and reset the evaluation process
+    displayValue =  `${result.toFixed(screenLength - 2)}`;
     firstNum = 0;
     operatorPressed = true;
     evaluation = false;
@@ -115,8 +114,7 @@ function eval() {
     
     // we would also like to get rid of extra zero digits
     while (displayValue.includes('.') && displayValue.lastIndexOf('0') == displayValue.length - 1) {
-        displayValue = displayValue.slice(0, -1);
-        console.log ('slicin')
+        displayValue = displayValue.slice(0, -1);     
     }
 
     // we don't want our dot to be the last element of the string
@@ -128,13 +126,9 @@ function eval() {
     if (displayValue.length > screenLength) {
         screen.textContent = 'ERROR'
         displayValue = '0';
-    } else {
-      screen.textContent = displayValue;
-     
-    }
+    } else screen.textContent = displayValue;
     
-}
-   
+    }  
 }
 
 function clearScreen() {
