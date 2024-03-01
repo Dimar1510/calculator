@@ -1,0 +1,100 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+ 
+}
+
+body {
+    background-color: lightgrey;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#frame {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    background-color: grey;
+    width: 400px;
+    min-width: 400px;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 20px;
+    flex: 0 1;
+}
+
+#screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100px;
+    width: 100%;
+    background-color: rgb(58, 98, 99);
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid black;
+
+}
+
+#screenResult {
+    font-size: 36px;
+    color: white;
+    align-self: flex-end;
+    
+}
+
+button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    font-size: 24px;
+    border: 2px solid black;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: white;
+  
+}
+
+button:hover {
+    background-color: #8aa0b6;
+}
+
+button:active {
+    background-color: lightslategrey;
+}
+#mainBtns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+}
+
+#mainBtns > button {
+    flex: 1;
+    height: 80px;
+    min-width: 70px;
+    width: 80px;
+    
+}
+
+#bigBtns {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+#bigBtns > button {
+    height: 50px;
+    flex: 1;
+}
