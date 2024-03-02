@@ -7,7 +7,9 @@ const btnEqual = document.querySelector('#btnEqual');
 const btnDel = document.querySelector('#btnDel');
 const screen = document.querySelector('#screenResult');
 const btnClear = document.querySelector('#btnClear');
-const btnMod = document.querySelector('#btnMod')
+const btnMod = document.querySelector('#btnMod');
+const message = document.querySelector('#message');
+
 
 const screenLength = 14;
 
@@ -64,7 +66,7 @@ function populateDisplay(num) {
         
         if (screen.textContent.length != screenLength) {
             screen.textContent += num;
-            displayValue = screen.textContent;   
+            displayValue = screen.textContent;  
         }
          
 }
@@ -75,6 +77,23 @@ function operation(operator) {
     }
     firstNum = Number(displayValue);
     operatorPressed = operator;
+    messageText(firstNum, operator);
+    
+}
+
+function messageText(num, operator) {
+    if (!evaluation) {
+        message.textContent = '';
+    }
+    let sign;
+    if (operator == 'plus') sign = '+';
+    if (operator == 'minus') sign = '-';
+    if (operator == 'div') sign = '÷';
+    if (operator == 'multi') sign = 'x';
+    if (operator == 'mod') sign = '%';
+    if (operator == 'equal') sign = '=';
+    message.textContent += `${num} ${sign} `
+    
 }
 
 function addDot() {
@@ -92,8 +111,9 @@ function addDot() {
 }
 
 function eval() {
-    if (firstNum != 0){
+    if (firstNum !== 0){
     secondNum = Number(displayValue);
+    messageText(secondNum, 'equal');
     
     if (evaluation == 'plus') result = firstNum + secondNum;
     if (evaluation == 'minus') result = firstNum - secondNum;
@@ -113,17 +133,17 @@ function eval() {
     }
     
     // we would also like to get rid of extra zero digits
-    while (displayValue.includes('.') && displayValue.lastIndexOf('0') == displayValue.length - 1) {
+    while (displayValue.includes('.') && displayValue.endsWith('0')) {
         displayValue = displayValue.slice(0, -1);     
     }
 
     // we don't want our dot to be the last element of the string
-        if (displayValue.indexOf('.') == displayValue.length - 1) {
+        if (displayValue.endsWith('.')) {
             displayValue = displayValue.slice(0, -1);
         }
 
     // if still too big, display error
-    if (displayValue.length > screenLength) {
+    if (displayValue.length > screenLength || result > Math.pow(10, screenLength) - 1) {
         screen.textContent = 'ERROR'
         displayValue = '0';
     } else screen.textContent = displayValue;
@@ -138,6 +158,7 @@ function clearScreen() {
     secondNum = 0;
     evaluation = false;
     operatorPressed = false;
+    message.textContent = '';
 }
 
 function del() {

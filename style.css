@@ -42,7 +42,8 @@ body {
 #screen {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
+    gap: 10px;
     height: 100px;
     width: 100%;
     background-color: rgb(58, 98, 99);
@@ -50,15 +51,23 @@ body {
     margin-bottom: 5px;
     border-radius: 10px;
     border: 2px solid black;
-    flex: 1;
+    
+}
+#message {
+    justify-self: flex-start;
+    align-self: flex-end;
+    color: white;
+    font-size: 16px;
+    
 }
 
 #screenResult {
     color: white;
     align-self: flex-end;
-    font-size: 36px;
+    font-size: 46px;
     font-family: digital;
     letter-spacing: 2px;
+    
 }
 
 #mainBtns {
@@ -123,10 +132,19 @@ button:active {
 
 @media (max-width: 400px) {
     #screenResult {
-        font-size: 20px;
-        
+        font-size: 24px;
     }
+
+    #screen {
+        height: 80px;;
+    }
+
+    #message {
+        font-size: 12px;
+    }
+
     button {
         font-size: 20px;
     }
+
 }
