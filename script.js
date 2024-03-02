@@ -39,8 +39,7 @@ btnEqual.onclick = () => eval();
 
 // assign keyboard keys
 window.addEventListener('keydown', (event) => {
-    if (Number.isInteger(parseInt(event.key)))
-    populateDisplay(event.key)
+    if (Number.isInteger(parseInt(event.key))) populateDisplay(event.key)
     else {
         if (event.key == ".") addDot();
         if (event.key == "Backspace") del();
@@ -78,7 +77,7 @@ function operation(operator) {
     firstNum = Number(displayValue);
     operatorPressed = operator;
     messageText(firstNum, operator);
-    
+    console.log('first ', firstNum)
 }
 
 function messageText(num, operator) {
@@ -97,30 +96,26 @@ function messageText(num, operator) {
 }
 
 function addDot() {
-    if (!displayValue.includes("."))
-    {
-        if (screen.textContent === '0') {
-            populateDisplay('0.');
-        }
-        else {
-            populateDisplay('.');
-        }
-    } else if (operatorPressed) {
-        populateDisplay('0.');
-    }
+    if (!displayValue.includes(".")) {
+        if (screen.textContent === '0') populateDisplay('0.');
+        else populateDisplay('.');
+    } else if (operatorPressed) populateDisplay('0.');
 }
 
 function eval() {
-    if (firstNum !== 0){
+    if (firstNum !== 0) {
     secondNum = Number(displayValue);
     messageText(secondNum, 'equal');
-    
+    console.log('second ', secondNum)
     if (evaluation == 'plus') result = firstNum + secondNum;
     if (evaluation == 'minus') result = firstNum - secondNum;
     if (evaluation == 'div') result = firstNum / secondNum;
     if (evaluation == 'multi') result = firstNum * secondNum;
     if (evaluation == 'mod') result = firstNum % secondNum;    
     
+    // avoiding float hell 
+    if (result < Math.pow(10, -7)) result = 0;
+
     // write the result and reset the evaluation process
     displayValue =  `${result.toFixed(screenLength - 2)}`;
     firstNum = 0;
@@ -147,8 +142,8 @@ function eval() {
         screen.textContent = 'ERROR'
         displayValue = '0';
     } else screen.textContent = displayValue;
-    
-    }  
+    }
+    console.log(result)  
 }
 
 function clearScreen() {
