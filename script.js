@@ -15,7 +15,7 @@ const screenLength = 14;
 
 let firstNum = 0;
 let secondNum = 0;
-let displayValue = '0';
+let displayValue = '';
 let operatorPressed = false;
 let result = 0;
 let evaluation = false;
@@ -58,16 +58,21 @@ window.addEventListener('keydown', (event) => {
 
 function populateDisplay(num) {
         if (operatorPressed || screen.textContent === '0') {
-            screen.textContent = ""
+            displayValue = ""
+            screen.textContent = displayValue;
             evaluation = operatorPressed;
             operatorPressed = false;
         }
         
-        if (screen.textContent.length != screenLength) {
-            screen.textContent += num;
-            displayValue = screen.textContent;  
+        if (displayValue.length < screenLength) {
+            displayValue += num;
+            displayValue = displayValue.replace(/\s/g,'')
+            displayValue = checkSpace(displayValue)
+            screen.textContent = displayValue;
+            displayValue = displayValue.replace(/\s/g,'')
         }
-         
+
+        
 }
 
 function operation(operator) {
@@ -92,14 +97,31 @@ function messageText(num, operator) {
     if (operator == 'mod') sign = '%';
     if (operator == 'equal') sign = '=';
     message.textContent += `${num} ${sign} `
-    
 }
+
+function checkSpace(str) {
+    if (str.includes('.')) {
+       str = str.split('.');
+        return addSpace(str[0]) + '.' + str[1];  
+    } else return addSpace(str);
+   
+}
+
+function addSpace(str) {
+    if (str.toString().length <= 3) return str;
+    let num = Number(str);
+    let firstHalf = Math.floor(num / 1000)
+    let secondHalf = (num % 1000).toString()
+    return addSpace(firstHalf) + " " + secondHalf.padStart(3, '0');
+}
+
 
 function addDot() {
     if (!displayValue.includes(".")) {
         if (screen.textContent === '0') populateDisplay('0.');
         else populateDisplay('.');
-    } else if (operatorPressed) populateDisplay('0.');
+    } 
+    else if (operatorPressed) populateDisplay('0.');
 }
 
 function eval() {
@@ -136,19 +158,21 @@ function eval() {
         if (displayValue.endsWith('.')) {
             displayValue = displayValue.slice(0, -1);
         }
-
+    screen.textContent = checkSpace(displayValue);
     // if still too big, display error
     if (displayValue.length > screenLength || result > Math.pow(10, screenLength) - 1) {
         screen.textContent = 'ERROR'
-        displayValue = '0';
-    } else screen.textContent = displayValue;
+        displayValue = '';
+    } 
     }
+
+    
     console.log(result)  
 }
 
 function clearScreen() {
     screen.textContent = "0";
-    displayValue = '0';
+    displayValue = '';
     firstNum = 0;
     secondNum = 0;
     evaluation = false;
@@ -157,10 +181,15 @@ function clearScreen() {
 }
 
 function del() {
-    if (screen.textContent !== '0') {
-        if (screen.textContent.length == 1) {
-            displayValue = '0';
-        } else displayValue = screen.textContent.slice(0, -1);
-    screen.textContent = displayValue;
+    if (displayValue !== '0') {
+        if (displayValue.length == 1) {
+            displayValue = '';
+            screen.textContent = '0';
+        } else {
+            displayValue = displayValue.slice(0, -1);
+            displayValue = checkSpace(displayValue);
+            screen.textContent = displayValue;
+            displayValue = displayValue.replace(/\s/g,'')
+        }
     }
 }
